@@ -32,3 +32,48 @@ penguins %>%
             standard_dev = sd(flipper_length_mm),
             sample_size = n())
 
+
+# Practice with joins
+
+animals <- data.frame(
+  stringsAsFactors = FALSE,
+          location = c("lagoon", "bluff", "creek", "oaks", "bluff"),
+           species = c("bobcat", "coyote", "fox", "squirrel", "bobcat"),
+          maturity = c("adult", "juvenile", "adult", "juvenile", "adult")
+)
+
+sites <- data.frame(
+  stringsAsFactors = FALSE,
+          location = c("beach", "lagoon", "bluff", "oaks"),
+    full_site_name = c("Goleta Beach","UCSB Lagoon",
+                       "Ellwood Mesa","Fremont Campground"),
+      jurisdiction = c("SB City", "UCSB", "SB City", "USFS")
+)
+
+
+# Practice with Mutating Joins -
+
+# Full join
+full_join <- full_join(animals, sites) # Keeps all rows and adds up columns
+
+# Left Join
+left_join(animals,sites) # add on columns from site (full_site_name & juridiction)
+
+# Right join
+right_join(animals,sites) # 5 columns, add in beach from site
+
+# Inner join
+inner_join(animals,sites) # removes creek from animals since it does not match on site
+
+# Practice with Filter joins
+semi_join(animals, sites)
+
+# same as this code
+animals %>%
+  filter(location %in% sites$location)
+
+# Anti joins
+anti_join(animals, sites) # if x= sites and y = animals : the output would change
+
+
+
