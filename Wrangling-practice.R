@@ -112,5 +112,95 @@ end_time <- Sys.time()
 
 end_time - start_time # this tell you how long a script took to run
 
+# Practice lubridate wihtin a data frame
 
+urchin_count <- tribble(
+  ~date, ~species, ~size_mm,
+  "10/03/2020", "purple", 55,
+  "10/04/2020", "red", 48,
+  "11/17/2020", "red", 67
+)
+
+# using lubridate
+urchin_count %>%
+  mutate(date= lubridate::mdy(date)) %>%   # corrected our date to Year Month Day
+  mutate(year = year(date),     # created a column for only the Year
+         month= month(date), # created a column for only the Month
+         day = day(date))  # created a column for only the Day
+
+day_1 <- lubridate::ymd("2020-01-06")
+day_2 <- ymd("2020-05-18")
+day_3 <- ymd("2020-05-19")
+
+# Creating time interval
+time_interval <- interval(day_1, day_2)
+time_length(time_interval, "week") # checking time in weeks
+time_length(time_interval, "year")
+
+
+# Practice with stringr
+
+#str_detect() - This will detect string patterns
+# The return will be TRUE/ FALSE, depending whether the pattern is detected
+
+my_string <- "Teddy loves eating salmon and socks"
+
+# Using str_detect - Does the pattern "love" exist within then string?
+my_string %>%
+  str_detect("pup")
+
+
+my_string <- c("burrito", "fish taco", "Taco salad")
+
+# Does the vector element contain the pattern "fish"?
+my_string %>%
+  str_detect("fish") # goes over the vector of three characters
+
+
+# More Powerful when combined with dplyr functions
+
+# load in starwars data in console
+
+starwars %>%
+  filter(str_detect(name,"Skywalker")) # returns name column that include Skywalker
+
+# Renaming character names from "Sky" to "Fire"
+firewalkers <- starwars %>%
+  # using mutate
+  # using str_replace()
+  mutate(name = str_replace(name, pattern = "Sky", replacement = "Fire"))
+
+# cleaning up white space
+feedback <- c(" I ate  some nachos", "Wednesday morning    ")
+
+# to remove leading, trailing, and duplicate spaces
+# use str_squish()
+
+str_squish(feedback)
+
+# remove only the leading and trailing spaces
+# using str_trim()
+str_trim(feedback)
+
+# Convert cases
+
+#turning everything to lowercase
+str_to_lower(feedback)
+#[1] " i ate  some nachos"   "wednesday morning    "
+
+#turning everything to Uppercase
+str_to_upper(feedback)
+#[1] " I ATE  SOME NACHOS"   "WEDNESDAY MORNING    "
+
+##turning everything to sentence
+str_to_sentence(feedback)
+#[1] " I ate  some nachos"   "Wednesday morning    "
+
+# #turning everything to Title
+str_to_title(feedback)
+#[1] " I Ate  Some Nachos"   "Wednesday Morning    "
+
+# Count matches in a string
+str_count(feedback, pattern= "nachos")
+#[1] 1 0
 
