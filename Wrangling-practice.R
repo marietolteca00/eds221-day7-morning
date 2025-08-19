@@ -76,4 +76,41 @@ animals %>%
 anti_join(animals, sites) # if x= sites and y = animals : the output would change
 
 
+#Practice with lubridate
+my_date <- "03-13-1998"
+lubridate::mdy(my_date) # Fixed date to ISO 8601, now 1998-03-13
+
+# New format for date
+my_date <- "08-Jun-1947"
+lubridate::dmy(my_date) # changed ^ my_date to 1947-06-08
+
+# Another Example
+my_date <- "19160518"
+lubridate::ymd(my_date) # changed ^ my_date to 1916-05-18
+
+lubridate::dmy("09/12/84")
+
+# lubridate will fail if date does not make sense.
+lubridate::myd("1942-08-30") #spits out warning message
+
+time <- "2020-08-12 11:18"
+time <- ymd_hm(time)
+
+# convert to PDT
+with_tz(time, "America/Los_Angeles")
+
+# extract info from dates
+# ask for individual columns for time
+week(time)
+year(time)
+day(time)
+
+# Just for fun
+
+start_time <- Sys.time() # Gets time from laptop
+end_time <- Sys.time()
+
+end_time - start_time # this tell you how long a script took to run
+
+
 
